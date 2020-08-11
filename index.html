@@ -1,0 +1,297 @@
+<!-- https://www.googleapis.com/youtube/v3/playlistItems?maxResults=100&playlistId=PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI&key=AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8 -->
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1,2,3 Gaming</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+      html,
+      body {
+        font-family: "Roboto", sans-serif;
+        background: rgb(238, 237, 237);
+        height: 2000px;
+        width: 100%;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      header {
+        z-index: 20;
+        height: 52px;
+        width: 100%;
+        background: #1e71c9;
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 0;
+      }
+      .content {
+        position: absolute;
+        top: 150px;
+        box-shadow: 0px 2px 10px rgb(223, 223, 223);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 80%;
+        background: #fff;
+      }
+      ::-webkit-scrollbar {
+        width: 0px;
+      }
+      .info {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        width: 200px;
+        left: 0;
+      }
+      .logo {
+        height: 40px;
+        width: 40px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 32px;
+        background: transparent no-repeat center;
+        background-size: cover;
+        border-radius: 3px;
+        background-image: url("https://yt3.ggpht.com/a/AATXAJxXxCwHxGFsadCw6SGabeAHzJaN04_i6Y5FGf5Z=s100-c-k-c0xffffffff-no-rj-mo");
+      }
+      .name {
+        text-align: center;
+        display: inline;
+        position: absolute;
+        background: transparent;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 600;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 90px;
+      }
+      .mail {
+        background-color: rgba(0, 0, 0, 0.829);
+        color: #fff;
+        padding: 2px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-style: normal;
+        position: absolute;
+        top: 50px;
+        display: none;
+      }
+      .logo:hover .mail {
+        display: block;
+      }
+      .options {
+        height: 40px;
+        width: 40px;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 32px;
+        top: 50%;
+        margin: 0;
+        transform: translateY(-50%);
+      }
+      circle {
+        stroke: #fff !important;
+      }
+      .list {
+        box-shadow: 0px 2px 4px rgb(221, 221, 221);
+        position: absolute;
+        height: auto;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        top: 10px;
+        left: -40px;
+        width: 110px;
+        background: white;
+      }
+      .list-i {
+        cursor: pointer;
+        list-style: none;
+        background: transparent;
+        height: 30px;
+        color: rgb(51, 51, 51);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .list-i:hover {
+        color: #fff;
+        background: rgba(32, 32, 32, 0.747);
+      }
+      .line1 {
+         height: 100%;
+         width: 33%;
+         position: absolute;
+         left: 0;
+         top:0;
+         background:transparent;
+      }
+      .line2 {
+         height: 100%;
+         width: 34%;
+         position: absolute;
+         left: 33%;
+         top:0;
+         background:transparent;
+      }
+      .line3 {
+         height: 100%;
+         width: 33%;
+         position: absolute;
+         right: 0;
+         top:0;
+         background:transparent;
+      }
+      .title-v {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 100%;
+        height: 52px;
+        background: rgb(235, 235, 235);
+      }
+      /* @media screen and (max-width:1000px){
+        .card{
+            width: 48%;
+            position: relative;
+            left:1.5%;
+            display: inline-block;
+            margin: 0;
+            top: 5px;
+        }
+    } */
+    .card{
+        width:80%;
+        height:150px;
+        position: relative;
+        top: 5px;
+        left: 50%;
+        background: rgb(241, 241, 241);
+        transform: translateX(-50%);
+    }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="info">
+        <div class="logo"><i class="mail">123gaming2020@gmail.com</i></div>
+        <div class="name">1,2,3 Gaming</div>
+      </div>
+      <div class="options">
+        <svg
+          class="dots"
+          xmlns="http://www.w3.org/2000/svg"
+          width="30"
+          height="30"
+          viewBox="0 0 512 512"
+        >
+          <circle
+            cx="256"
+            cy="256"
+            r="32"
+            style="
+              fill: none;
+              stroke: #000;
+              stroke-miterlimit: 10;
+              stroke-width: 32px;
+            "
+          />
+          <circle
+            cx="416"
+            cy="256"
+            r="32"
+            style="
+              fill: none;
+              stroke: #000;
+              stroke-miterlimit: 10;
+              stroke-width: 32px;
+            "
+          />
+          <circle
+            cx="96"
+            cy="256"
+            r="32"
+            style="
+              fill: none;
+              stroke: #000;
+              stroke-miterlimit: 10;
+              stroke-width: 32px;
+            "
+          />
+        </svg>
+        <div class="list" hidden="true">
+          <li class="list-i">Gaming</li>
+          <li class="list-i">Trotinnette</li>
+          <li class="list-i">Tuto</li>
+          <li class="list-i">Autres</li>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+        <div class="line1">
+            <div class="card">
+                <div class="card-image"></div>
+                <div class="card-title">
+                  <b class="title-v"></b><i class="date-v"></i>
+                </div>
+              </div>
+        </div>
+        <div class="line2">
+            <div class="card">
+                <div class="card-image"></div>
+                <div class="card-title">
+                  <b class="title-v"></b><i class="date-v"></i>
+                </div>
+              </div>
+        </div>
+        <div class="line3">
+            <div class="card">
+                <div class="card-image"></div>
+                <div class="card-title">
+                  <b class="title-v"></b><i class="date-v"></i>
+                </div>
+              </div>
+        </div>
+      <!-- <div class="card">
+        <div class="card-image"></div>
+        <div class="card-title">
+          <b class="title-v"></b><i class="date-v"></i>
+        </div>
+      </div> -->
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const list = document.getElementsByClassName("list")[0];
+        const op = document.getElementsByClassName("options")[0];
+        const dots = document.getElementsByClassName("dots")[0];
+        document.addEventListener("click", (e) => {
+          if (e.target !== op && e.target.parentElement !== op) {
+            list.hidden = true;
+          }
+        });
+        op.addEventListener("click", () => {
+          list.hidden = false;
+        });
+        // const xhttp = new XMLHttpRequest();
+        // xhttp.onreadystatechange = ()=>{
+        //     console.log("ok");
+        //     console.log(this);
+        //     if (this.readyState == 4) {
+        //      console.log(this.responseText);
+        //     }
+        // };
+        // xhttp.open("GET", "https://www.googleapis.com/youtube/v3/playlistItems?maxResults=100&playlistId=PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI&key=AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
+        // xhttp.send();
+      });
+    </script>
+  </body>
+</html>
