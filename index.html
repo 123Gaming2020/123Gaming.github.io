@@ -285,12 +285,12 @@
     </script>
     <script src="https://apis.google.com/js/api.js"></script>
 <script>
-  function authenticate() {
-    return gapi.auth2.getAuthInstance()
-        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-        .then(function() { console.log("Sign-in successful"); },
-              function(err) { console.error("Error signing in", err); });
-  }
+//   function authenticate() {
+//     return gapi.auth2.getAuthInstance()
+//         .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+//         .then(function() { console.log("Sign-in successful"); },
+//               function(err) { console.error("Error signing in", err); });
+//   }
   function loadClient() {
     gapi.client.setApiKey("AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
