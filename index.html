@@ -294,5 +294,33 @@
         xhttp.send();
       });
     </script>
+    <script src="https://apis.google.com/js/api.js"></script>
+<script>
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    gapi.client.setApiKey("AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  function execute() {
+    return gapi.client.youtube.playlistItems.list({})
+        .then(function(response) {
+               
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "360242505187-q5t84l1ja0lfp2f103v9pt7mcose7ui4.apps.googleusercontent.com"});
+  });
+  authenticate().then(loadClient);
+  execute()
+    </script>
   </body>
 </html>
