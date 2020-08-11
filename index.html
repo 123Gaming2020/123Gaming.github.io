@@ -280,18 +280,18 @@
         op.addEventListener("click", () => {
           list.hidden = false;
         });
-        const xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = ()=>{
-            console.log("ok");
-            console.log(this);
-            if (this.readyState == 4) {
-             console.log(this.responseText);
-            }
-        };
-        xhttp.open("GET", "https://www.googleapis.com/youtube/v3/playlistItems?maxResults=100&playlistId=PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI&key=AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
-        xhttp.setRequestHeader('Authorization','Bearer 360242505187-q5t84l1ja0lfp2f103v9pt7mcose7ui4.apps.googleusercontent.com');
-        xhttp.setRequestHeader('Accept','application/json');
-        xhttp.send();
+//         const xhttp = new XMLHttpRequest();
+//         xhttp.onreadystatechange = ()=>{
+//             console.log("ok");
+//             console.log(this);
+//             if (this.readyState == 4) {
+//              console.log(this.responseText);
+//             }
+//         };
+//         xhttp.open("GET", "https://www.googleapis.com/youtube/v3/playlistItems?maxResults=100&playlistId=PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI&key=AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
+//         xhttp.setRequestHeader('Authorization','Bearer 360242505187-q5t84l1ja0lfp2f103v9pt7mcose7ui4.apps.googleusercontent.com');
+//         xhttp.setRequestHeader('Accept','application/json');
+//         xhttp.send();
       });
     </script>
     <script src="https://apis.google.com/js/api.js"></script>
