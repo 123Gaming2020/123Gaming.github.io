@@ -154,4 +154,3 @@ function requestVideoPlaylist(playlistId) {
     }
   });
 }
-© 2020 GitHub, Inc.
