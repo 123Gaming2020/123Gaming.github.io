@@ -287,12 +287,12 @@
 <script>
   function authenticate() {
     console.log(gapi)
-    Object.key(gapi).map(item=>{
+   Object.keys(gapi).map(item=>{
     console.log(item)
-    
-    })
-    return gapi.auth2.getAuthInstance().signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"}).then(function() { console.log("Sign-in successful"); },
-              function(err) { console.error("Error signing in", err); });
+    });
+    return gapi;
+    //return gapi.auth2.getAuthInstance().signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"}).then(function() { console.log("Sign-in successful"); },
+      //        function(err) { console.error("Error signing in", err); });
   }
   function loadClient() {
     gapi.client.setApiKey("AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
