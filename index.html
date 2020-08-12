@@ -158,16 +158,6 @@
         height: 52px;
         background: rgb(235, 235, 235);
       }
-      /* @media screen and (max-width:1000px){
-        .card{
-            width: 48%;
-            position: relative;
-            left:1.5%;
-            display: inline-block;
-            margin: 0;
-            top: 5px;
-        }
-    } */
       .card {
         width: 80%;
         margin-top: 5px;
@@ -177,6 +167,16 @@
         left: 50%;
         background: rgb(241, 241, 241);
         transform: translateX(-50%);
+      }
+      @media screen and (max-width: 790px) {
+        .content {
+          width: 90%;
+        }
+      }
+      @media screen and (max-width: 450px) {
+        .content {
+          width: 96%;
+        }
       }
     </style>
   </head>
@@ -229,10 +229,10 @@
           />
         </svg>
         <div class="list" hidden="true">
-          <li class="list-i">Gaming</li>
-          <li class="list-i">Trotinnette</li>
-          <li class="list-i">Tuto</li>
-          <li class="list-i">Autres</li>
+          <li class="list-i" id="gaming">Gaming</li>
+          <li class="list-i" id="scooter">Trotinnette</li>
+          <li class="list-i" id="tuto">Tuto</li>
+          <li class="list-i" id="others">Autres</li>
         </div>
       </div>
     </header>
@@ -240,12 +240,6 @@
       <div class="line1"></div>
       <div class="line2"></div>
       <div class="line3"></div>
-      <!-- <div class="card">
-        <div class="card-image"></div>
-        <div class="card-title">
-          <b class="title-v"></b><i class="date-v"></i>
-        </div>
-      </div> -->
     </div>
     <script
       type="text/javascript"
@@ -266,14 +260,14 @@
         });
 
         function getAllPlaylist(id) {
-          return new Promise(function (resolve, reject) {
+          return new Promise((resolve, reject) => {
             $.ajax("https://www.googleapis.com/youtube/v3/playlistItems", {
               type: "GET",
               data: {
                 playlistId: id,
                 key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
                 maxResults: 100,
-                part:"snippet, contentDetails, status",
+                part: "snippet, contentDetails",
               },
               success: function (data, status, xhr) {
                 resolve(data);
@@ -310,58 +304,108 @@
             nbRemainder: nbRemainder,
             total: int,
           };
-        }//PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI
+        }
+        function loadPlaylist(int = 0) {
+          switch (int) {
+            case 0:
+              return "PLbP-RAPbcirUYwvch_YOUFaTBn60Ywfpz";
+              break;
+            case 1:
+              return "PLbP-RAPbcirUCOzJz5JTdpIDDXxhaYruC";
+              break;
+            case 2:
+              return "PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI";
+              break;
+            case 3:
+              return "PLbP-RAPbcirVcSlTkvMmkQil6K3gu_fJv";
+              break;
+            default:
+              return "PLbP-RAPbcirUUDIQf7ZROYYVyMEDL1CCj";
+              break;
+          }
+        }
+
+        for (
+          let i = 0;
+          i < document.getElementsByClassName("list-i").length;
+          i++
+        ) {
+          document
+            .getElementsByClassName("list-i")
+            [i].addEventListener("click", () => {
+              getAllPlaylist(loadPlaylist(i));
+            });
+        }
+
         var c1 = false,
           c2 = false,
           c3 = true;
-        getAllPlaylist("PLCJLiJ8uSJrCpxwz4lmnz1NvvF2SzXbhk").then((data) => {
-          function makeCard(col = 1) {
-            let d = document.createElement("div");
-            d.className = "card";
-            d.innerHTML = `
-          <div class="card-image"></div>
+        getAllPlaylist("PLCJLiJ8uSJrCpxwz4lmnz1NvvF2SzXbhk")
+          .then((data) => {
+            function makeCard(col = 1, item) {
+              let d = document.createElement("div");
+              d.className = "card";
+              d.innerHTML =
+                `
+          <div class="card-image"><img src="` +
+                item.snippet.thumbnails.default.url +
+                `" class="card-img"></div>
           <div class="card-title">
-            <b class="title-v"></b><i class="date-v"></i>
+            <b class="title-v"> ` +
+                item.snippet.thumbnails.title +
+                `</b><i class="date-v">` +
+                item.snippet.publishedAt +
+                `</i>
           </div>
            `;
-            document.getElementsByClassName("line" + col)[0].appendChild(d);
-          }
-          for (let i = 0; i < data.items.length; i++) {
-            console.log(data.items[i]);
-            if (c1 && !c2 && !c3) {
-              c2 = true;
-              c1 = false;
-              c3 = false;
-              makeCard(2);
-            } else if (!c1 && !c3 && c2) {
-              c2 = false;
-              c1 = false;
-              c3 = true;
-              makeCard(3);
-            } else if (!c2 && c3 && !c1) {
-              c2 = false;
-              c1 = true;
-              c3 = false;
-              makeCard(1);
+              document.getElementsByClassName("line" + col)[0].appendChild(d);
             }
-          }
-        });
+            for (let i = 0; i < data.items.length; i++) {
+              console.log(data.items[i]);
+              if (c1 && !c2 && !c3) {
+                c2 = true;
+                c1 = false;
+                c3 = false;
+                makeCard(2, data.item[i]);
+              } else if (!c1 && !c3 && c2) {
+                c2 = false;
+                c1 = false;
+                c3 = true;
+                makeCard(3);
+              } else if (!c2 && c3 && !c1) {
+                c2 = false;
+                c1 = true;
+                c3 = false;
+                makeCard(1);
+              }
+            }
+          })
+          .catch((err) => {});
       });
 
-      $.ajax("https://www.googleapis.com/youtube/v3/activities", {
-        type: "GET",
-        data: {
-          channelId: "UCSG_LMWaqEikCc_BWeu2jlw",
-          key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
-          part:"snippet, contentDetails",
-        },
-        success: function (data, status, xhr) {
+      function AllVideo() {
+        return new Promise((resolve, reject) => {
+          $.ajax("https://www.googleapis.com/youtube/v3/activities", {
+            type: "GET",
+            data: {
+              channelId: "UCSG_LMWaqEikCc_BWeu2jlw",
+              key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
+              part: "snippet, contentDetails",
+            },
+            success: function (data, status, xhr) {
+              resolve(data);
+            },
+            error: function (jqXhr, textStatus, errorMessage) {
+              reject(errorMessage);
+            },
+          });
+        });
+      }
+      AllVideo()
+        .then((data) => {
           console.log(data);
-        },
-        error: function (jqXhr, textStatus, errorMessage) {
-          console.log(errorMessage);
-        },
-      });
+        })
+        .catch((err) => {});
     </script>
   </body>
 </html>
