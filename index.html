@@ -236,7 +236,7 @@
         </div>
       </div>
     </header>
-    <div class="content">
+    <div class="content" id="content-video">
       <div class="line1"></div>
       <div class="line2"></div>
       <div class="line3"></div>
@@ -305,6 +305,13 @@
             total: int,
           };
         }
+        function clearBox(elementID) {
+          var div = document.getElementById(elementID);
+
+          while (div.firstChild) {
+            div.removeChild(div.firstChild);
+          }
+        }
         function loadPlaylist(int = 0) {
           switch (int) {
             case 0:
@@ -333,6 +340,7 @@
           document
             .getElementsByClassName("list-i")
             [i].addEventListener("click", () => {
+              clearBox("content-video");
               getAllPlaylist(loadPlaylist(i));
             });
         }
