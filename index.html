@@ -270,12 +270,11 @@
             $.ajax("https://www.googleapis.com/youtube/v3/playlistItems", {
               type: "GET",
               data: {
+                id:"PLCJLiJ8uSJrCpxwz4lmnz1NvvF2SzXbhk",
                 playlistId: id,
                 key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
                 maxResults: 100,
-              },
-              beforeSend:(xhr)=>{
-                xhr.setRequestHeader('Authorization','Bearer ouYhq31eMMpfrTwLRVk-Ft19');
+                part:"snippet, contentDetails, status",
               },
               success: function (data, status, xhr) {
                 resolve(data);
@@ -312,11 +311,11 @@
             nbRemainder: nbRemainder,
             total: int,
           };
-        }
+        }//PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI
         var c1 = false,
           c2 = false,
           c3 = true;
-        getAllPlaylist("PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI").then((data) => {
+        getAllPlaylist("PLCJLiJ8uSJrCpxwz4lmnz1NvvF2SzXbhk").then((data) => {
           function makeCard(col = 1) {
             let d = document.createElement("div");
             d.className = "card";
@@ -355,6 +354,7 @@
         data: {
           channelId: "UCSG_LMWaqEikCc_BWeu2jlw",
           key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
+          part:"snippet, contentDetails, status",
         },
         success: function (data, status, xhr) {
           console.log(data);
