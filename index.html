@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-     <meta name="google-signin-client_id" content="360242505187-q5t84l1ja0lfp2f103v9pt7mcose7ui4.apps.googleusercontent.com">
     <title>1,2,3 Gaming</title>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
@@ -128,28 +127,28 @@
         background: rgba(32, 32, 32, 0.747);
       }
       .line1 {
-         height: 100%;
-         width: 33%;
-         position: absolute;
-         left: 0;
-         top:0;
-         background:transparent;
+        height: 100%;
+        width: 33%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: transparent;
       }
       .line2 {
-         height: 100%;
-         width: 34%;
-         position: absolute;
-         left: 33%;
-         top:0;
-         background:transparent;
+        height: 100%;
+        width: 34%;
+        position: absolute;
+        left: 33%;
+        top: 0;
+        background: transparent;
       }
       .line3 {
-         height: 100%;
-         width: 33%;
-         position: absolute;
-         right: 0;
-         top:0;
-         background:transparent;
+        height: 100%;
+        width: 33%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: transparent;
       }
       .title-v {
         position: absolute;
@@ -169,15 +168,16 @@
             top: 5px;
         }
     } */
-    .card{
-        width:80%;
-        height:150px;
+      .card {
+        width: 80%;
+        margin-top: 5px;
+        height: 150px;
         position: relative;
         top: 5px;
         left: 50%;
         background: rgb(241, 241, 241);
         transform: translateX(-50%);
-    }
+      }
     </style>
   </head>
   <body>
@@ -237,30 +237,9 @@
       </div>
     </header>
     <div class="content">
-        <div class="line1">
-            <div class="card">
-                <div class="card-image"></div>
-                <div class="card-title">
-                  <b class="title-v"></b><i class="date-v"></i>
-                </div>
-              </div>
-        </div>
-        <div class="line2">
-            <div class="card">
-                <div class="card-image"></div>
-                <div class="card-title">
-                  <b class="title-v"></b><i class="date-v"></i>
-                </div>
-              </div>
-        </div>
-        <div class="line3">
-            <div class="card">
-                <div class="card-image"></div>
-                <div class="card-title">
-                  <b class="title-v"></b><i class="date-v"></i>
-                </div>
-              </div>
-        </div>
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
       <!-- <div class="card">
         <div class="card-image"></div>
         <div class="card-title">
@@ -268,6 +247,10 @@
         </div>
       </div> -->
     </div>
+    <script
+      type="text/javascript"
+      src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"
+    ></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const list = document.getElementsByClassName("list")[0];
@@ -281,39 +264,105 @@
         op.addEventListener("click", () => {
           list.hidden = false;
         });
-      });
-    </script>
-    <script src="https://apis.google.com/js/api.js"></script>
-<script>
-  /*function authenticate() {
-    console.log(gapi)
-   Object.keys(gapi).map(item=>{
-    console.log(item)
-    });
-    return gapi;
-    //return gapi.auth2.getAuthInstance().signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"}).then(function() { console.log("Sign-in successful"); },
-      //        function(err) { console.error("Error signing in", err); });
-  }*/
-  function loadClient() {
-    gapi.client.setApiKey("AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { console.log("GAPI client loaded for API"); },
-              function(err) { console.error("Error loading GAPI client for API", err); });
-  }
-  function execute() {
-    return gapi.client.youtube.playlistItems.list({})
-        .then(function(response) {
-               
-                console.log("Response", response);
+
+        function getAllPlaylist(id) {
+          return new Promise(function (resolve, reject) {
+            $.ajax("https://www.googleapis.com/youtube/v3/playlistItems", {
+              type: "GET",
+              data: {
+                playlistId: id,
+                key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
+                maxResults: 100,
               },
-              function(err) { console.error("Execute error", err); });
-  }
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "360242505187-q5t84l1ja0lfp2f103v9pt7mcose7ui4.apps.googleusercontent.com"});
-  });
-//   authenticate().then();
-  loadClient();
-  execute();
+              beforeSend:(xhr)=>{
+                // xhr.setRequestHeader('Authorization','Bearer');
+              },
+              success: function (data, status, xhr) {
+                resolve(data);
+              },
+              error: function (jqXhr, textStatus, errorMessage) {
+                reject(errorMessage);
+              },
+            });
+          });
+        }
+
+        function PartDivision(int, diviseNumber = 3) {
+          let quotient = Math.floor(int / diviseNumber);
+          let remainder = int % diviseNumber;
+          let lcR = remainder;
+          let nbRemainder = 1;
+          if (remainder != 0) {
+            while (quotient + lcR != int) {
+              lcR += remainder;
+              nbRemainder++;
+            }
+          } else {
+            nbRemainder = int / quotient;
+            if (nbRemainder * quotient != int) {
+              throw new Error(
+                "Fail to part division, number (" + int + ") not available !"
+              );
+            }
+          }
+
+          return {
+            remainder: remainder,
+            quotient: quotient,
+            nbRemainder: nbRemainder,
+            total: int,
+          };
+        }
+        var c1 = false,
+          c2 = false,
+          c3 = true;
+        getAllPlaylist("PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI").then((data) => {
+          function makeCard(col = 1) {
+            let d = document.createElement("div");
+            d.className = "card";
+            d.innerHTML = `
+          <div class="card-image"></div>
+          <div class="card-title">
+            <b class="title-v"></b><i class="date-v"></i>
+          </div>
+           `;
+            document.getElementsByClassName("line" + col)[0].appendChild(d);
+          }
+          for (let i = 0; i < data.items.length; i++) {
+            console.log(data.items[i]);
+            if (c1 && !c2 && !c3) {
+              c2 = true;
+              c1 = false;
+              c3 = false;
+              makeCard(2);
+            } else if (!c1 && !c3 && c2) {
+              c2 = false;
+              c1 = false;
+              c3 = true;
+              makeCard(3);
+            } else if (!c2 && c3 && !c1) {
+              c2 = false;
+              c1 = true;
+              c3 = false;
+              makeCard(1);
+            }
+          }
+        });
+      });
+
+      $.ajax("https://www.googleapis.com/youtube/v3/activities", {
+        type: "GET",
+        data: {
+          channelId: "UCSG_LMWaqEikCc_BWeu2jlw",
+          key: "AIzaSyATb9GZHW0v3JVXcprz26UagoDUk467oG8",
+        },
+        success: function (data, status, xhr) {
+          console.log(data);
+        },
+        error: function (jqXhr, textStatus, errorMessage) {
+          console.log(errorMessage);
+        },
+      });
     </script>
   </body>
 </html>
