@@ -551,9 +551,9 @@
               clearBox("l2");
               clearBox("l3");
               getAllPlaylist(loadPlaylist(i)).then((data) => {
-		    c2 = false;
-                    c1 = true;
-                    c3 = false;
+		    c1 = false;
+          c2 = false;
+          c3 = true;
                 for (let i = 0; i < data.items.length; i++) {
                   if (c1 && !c2 && !c3) {
                     c2 = true;
