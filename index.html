@@ -199,21 +199,21 @@
         background: transparent no-repeat center;
         background-size: cover;
       }
-      .blur{
+      .blur {
         position: fixed;
         top: 0;
-        left:0;
+        left: 0;
         z-index: 999;
         height: 100%;
         width: 100%;
         display: none;
         background: rgba(0, 0, 0, 0.664);
       }
-      #lct{
+      #lct {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
       }
     </style>
   </head>
@@ -279,7 +279,15 @@
       <div class="line3" id="l3"></div>
     </div>
     <div class="blur">
-      <iframe id="lct"width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe
+        id="lct"
+        width="560"
+        height="315"
+        src=""
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
     </div>
     <script
       type="text/javascript"
@@ -385,74 +393,79 @@
               clearBox("l1");
               clearBox("l2");
               clearBox("l3");
-              getAllPlaylist(loadPlaylist(i)).then(data=>{
+              getAllPlaylist(loadPlaylist(i)).then((data) => {
                 for (let i = 0; i < data.items.length; i++) {
-              if (c1 && !c2 && !c3) {
-                c2 = true;
-                c1 = false;
-                c3 = false;
-                makeCard(2, data.items[i]);
-              } else if (!c1 && !c3 && c2) {
-                c2 = false;
-                c1 = false;
-                c3 = true;
-                makeCard(3, data.items[i]);
-              } else if (!c2 && c3 && !c1) {
-                c2 = false;
-                c1 = true;
-                c3 = false;
-                makeCard(1, data.items[i]);
-              }
-            }
+                  if (c1 && !c2 && !c3) {
+                    c2 = true;
+                    c1 = false;
+                    c3 = false;
+                    makeCard(2, data.items[i]);
+                  } else if (!c1 && !c3 && c2) {
+                    c2 = false;
+                    c1 = false;
+                    c3 = true;
+                    makeCard(3, data.items[i]);
+                  } else if (!c2 && c3 && !c1) {
+                    c2 = false;
+                    c1 = true;
+                    c3 = false;
+                    makeCard(1, data.items[i]);
+                  }
+                }
               });
             });
         }
-        function OpenLecteur(videoId){
-          $('.blur').fadeIn(400);
-          document.getElementById('lct').src = "https://www.youtube.com/embed/"+videoId;
-        }
-        $('.blur').on('click',()=>{
-          $('.blur').fadeOut(300);
+        $(".logo").on("click", () => {
+          window.open(
+            "https://mail.google.com/mail/?view=cm&fs=1&to=123gaming2020@gmail.com"
+          );
         });
-          function makeCard(col = 1, item) {
-              let d = document.createElement("div");
-              d.className = "card";
-              d.id = item.snippet.title;
-              d.onclick = (e)=>{
-                OpenLecteur(item.snippet.resourceId.videoId);
-              }
-              try {
-                d.innerHTML =
-                  `
+        function OpenLecteur(videoId) {
+          $(".blur").fadeIn(400);
+          document.getElementById("lct").src =
+            "https://www.youtube.com/embed/" + videoId;
+        }
+        $(".blur").on("click", () => {
+          $(".blur").fadeOut(300);
+        });
+        function makeCard(col = 1, item) {
+          let d = document.createElement("div");
+          d.className = "card";
+          d.id = item.snippet.title;
+          d.onclick = (e) => {
+            OpenLecteur(item.snippet.resourceId.videoId);
+          };
+          try {
+            d.innerHTML =
+              `
           <div class="card-image"><div style="background-image:url('` +
-                  item.snippet.thumbnails.standard.url +
-                  `');" class="card-img"></div></div>
+              item.snippet.thumbnails.standard.url +
+              `');" class="card-img"></div></div>
           <div class="card-title">
             <b class="title-v"> ` +
-                  item.snippet.title +
-                  `</b><i class="date-v">` +
-                  item.snippet.publishedAt +
-                  `</i>
+              item.snippet.title +
+              `</b><i class="date-v">` +
+              item.snippet.publishedAt +
+              `</i>
           </div>
            `;
-              } catch {
-                d.innerHTML =
-                  `
+          } catch {
+            d.innerHTML =
+              `
           <div class="card-image"><div style="background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAAB5CAMAAAAqJH57AAAAIVBMVEXh6vH////3+frx9fj0+Pve6PHs8vb7/Pzn7vPr8ffk7PR6WZ72AAABC0lEQVRoge3Y6xKCIBBAYWNR1Pd/4BpkVIwu0II5c85v108zyew6IiIiIiIiIiL68/rSfoUHKW34UTa30gzy1WTnTE7Oqck2c8iqybk7KRpC/m4nTwtlG3k0N3dcKNvI/t6V+LQrytMq2WXZ+GZIQ5btJN0ij21k2X2+YXWdm8jirWGhx2WNbnGdewm/CIGeEqtrFXmFV7qbPw6pyBu80T4ndeU9HN3Gj+3k1ZCGHMM72m8m6SEFuT/CK23iA9GWE3C41iZ1IIpyCvb07llNqshJ+EFHD4kt5ThkZORLyJWHkE+XbeYLKb3/z87mpffOoCjkK8mS+eXaks87f99p73qJiIiIiIiIiKh2d2gHDWxLL3aJAAAAAElFTkSuQmCC');" class="card-img"></div></div>
           <div class="card-title">
             <b class="title-v"> ` +
-                  item.snippet.title +
-                  `</b><i class="date-v">` +
-                  item.snippet.publishedAt +
-                  `</i>
+              item.snippet.title +
+              `</b><i class="date-v">` +
+              item.snippet.publishedAt +
+              `</i>
           </div>
            `;
-              }
-               document.getElementsByClassName("line" + col)[0].appendChild(d);
-            }
+          }
+          document.getElementsByClassName("line" + col)[0].appendChild(d);
+        }
         getAllPlaylist("PLbP-RAPbcirUUDIQf7ZROYYVyMEDL1CCj")
           .then((data) => {
-            
             for (let i = 0; i < data.items.length; i++) {
               if (c1 && !c2 && !c3) {
                 c2 = true;
@@ -491,11 +504,11 @@
             });
           });
         }
-      //   AllVideo()
-      //     .then((data) => {
-           
-      //     })
-      //     .catch((err) => {});
+        //   AllVideo()
+        //     .then((data) => {
+
+        //     })
+        //     .catch((err) => {});
       });
     </script>
   </body>
