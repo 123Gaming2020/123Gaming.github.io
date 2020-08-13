@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>1,2,3 Gaming</title>
     <style>
-      
-> 0%
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
       html,
       body {
@@ -138,7 +136,7 @@
                 transform: translateY(-50%);
       }
       circle {
-        stroke: #fff;
+        stroke: #fff !important;
       }
       .list {
         -webkit-box-shadow: 0px 2px 4px rgb(221, 221, 221);
@@ -260,6 +258,10 @@
            -moz-background-size: cover;
              -o-background-size: cover;
                 background-size: cover;
+                transition: 0.3s;
+      }
+      .card-img:hover{
+        filter: brightness(0.5);
       }
       .blur {
         position: fixed;
