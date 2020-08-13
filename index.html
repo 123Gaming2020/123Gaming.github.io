@@ -6,6 +6,10 @@
     <title>1,2,3 Gaming</title>
     <style>
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+      :root{
+        --pc:#1e71c9;
+      }
+      
       html,
       body {
         font-family: "Roboto", sans-serif;
@@ -22,6 +26,7 @@
         height: 52px;
         width: 100%;
         background: #1e71c9;
+        background: var(--pc);
         position: fixed;
         top: 0;
         left: 0;
@@ -283,6 +288,62 @@
              -o-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
       }
+      #setting{
+        position: absolute;
+    bottom: 0;
+    border: none;
+    padding: 10px;
+    outline:none;
+      }
+      .s-i{
+        stroke:#474747 !important;
+      }
+      .modal{
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        display: none;
+        background: rgba(0, 0, 0, 0.664);
+      }
+      .colors{
+        width: 200px;
+        height: 50px;
+        border-radius: 5px;
+        background-color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+      }
+      .c{
+        border-radius: 50%;
+        height: 30PX;
+        width: 30px;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        margin-left: 5px;
+        /* margin-right:2px; */
+        border: none;
+      }
+      .c1b{
+        background: rgb(224, 98, 14);
+      }
+      .c2b{
+        background: rgb(131, 43, 212);
+      }
+      .c3b{
+        background: rgb(25, 226, 35);
+      }
+      .c4b{
+        background: rgb(212, 43, 66);
+      }
+      .c5b{
+        background: #1e71c9;
+      }
     </style>
   </head>
   <body>
@@ -349,13 +410,25 @@
     <div class="blur">
       <iframe
         id="lct"
-        width="560"
-        height="315"
+        width="320"
+      
         src=""
         frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
       ></iframe>
+    </div>
+    <button id="setting">
+      <svg class="s-i" xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 512 512'><path d='M262.29,192.31a64,64,0,1,0,57.4,57.4A64.13,64.13,0,0,0,262.29,192.31ZM416.39,256a154.34,154.34,0,0,1-1.53,20.79l45.21,35.46A10.81,10.81,0,0,1,462.52,326l-42.77,74a10.81,10.81,0,0,1-13.14,4.59l-44.9-18.08a16.11,16.11,0,0,0-15.17,1.75A164.48,164.48,0,0,1,325,400.8a15.94,15.94,0,0,0-8.82,12.14l-6.73,47.89A11.08,11.08,0,0,1,298.77,470H213.23a11.11,11.11,0,0,1-10.69-8.87l-6.72-47.82a16.07,16.07,0,0,0-9-12.22,155.3,155.3,0,0,1-21.46-12.57,16,16,0,0,0-15.11-1.71l-44.89,18.07a10.81,10.81,0,0,1-13.14-4.58l-42.77-74a10.8,10.8,0,0,1,2.45-13.75l38.21-30a16.05,16.05,0,0,0,6-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16,16,0,0,0-6.07-13.94l-38.19-30A10.81,10.81,0,0,1,49.48,186l42.77-74a10.81,10.81,0,0,1,13.14-4.59l44.9,18.08a16.11,16.11,0,0,0,15.17-1.75A164.48,164.48,0,0,1,187,111.2a15.94,15.94,0,0,0,8.82-12.14l6.73-47.89A11.08,11.08,0,0,1,213.23,42h85.54a11.11,11.11,0,0,1,10.69,8.87l6.72,47.82a16.07,16.07,0,0,0,9,12.22,155.3,155.3,0,0,1,21.46,12.57,16,16,0,0,0,15.11,1.71l44.89-18.07a10.81,10.81,0,0,1,13.14,4.58l42.77,74a10.8,10.8,0,0,1-2.45,13.75l-38.21,30a16.05,16.05,0,0,0-6.05,14.08C416.17,247.67,416.39,251.83,416.39,256Z' style='fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:32px'/></svg>
+    </button>
+    <div class="modal">
+      <div class="colors">
+        <button class="c c5b"></button>
+        <button class="c c4b"></button>
+        <button class="c c3b"></button>
+        <button class="c c2b"></button>
+        <button class="c c1b"></button>
+      </div>
     </div>
     <script
       type="text/javascript"
@@ -363,6 +436,7 @@
     ></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+
         const list = document.getElementsByClassName("list")[0];
         const op = document.getElementsByClassName("options")[0];
         const dots = document.getElementsByClassName("dots")[0];
@@ -374,7 +448,9 @@
         op.addEventListener("click", () => {
           list.hidden = false;
         });
-
+        $('#setting').on('click',()=>{
+          $('.modal').fadeIn(300);
+        })
         function getAllPlaylist(id) {
           return new Promise((resolve, reject) => {
             $.ajax("https://www.googleapis.com/youtube/v3/playlistItems", {
@@ -496,6 +572,18 @@
         $(".blur").on("click", () => {
           $(".blur").fadeOut(300);
         });
+        function ChangeCo(nb){
+          $('.c'+nb+'b').on('click',()=>{
+            let co = $('.c'+nb+'b').css('background');
+            document.documentElement.style.setProperty('--pc', co);
+            $('.modal').fadeOut(300)
+          })
+        }
+        ChangeCo(1)
+        ChangeCo(2)
+        ChangeCo(3)
+        ChangeCo(4)
+        ChangeCo(5)
         function makeCard(col = 1, item) {
           let d = document.createElement("div");
           d.className = "card";
@@ -532,8 +620,31 @@
           }
           document.getElementsByClassName("line" + col)[0].appendChild(d);
         }
-        getAllPlaylist("PLbP-RAPbcirUUDIQf7ZROYYVyMEDL1CCj")
+        let date2 = new Date();
+        if(localStorage.getItem('video'+date2.getDay() +"-"+date2.getMonth()+"-"+date2.getFullYear())){
+          let data = JSON.parse(localStorage.getItem('video'));
+          for (let i = 0; i < data.items.length; i++) {
+              if (c1 && !c2 && !c3) {
+                c2 = true;
+                c1 = false;
+                c3 = false;
+                makeCard(2, data.items[i]);
+              } else if (!c1 && !c3 && c2) {
+                c2 = false;
+                c1 = false;
+                c3 = true;
+                makeCard(3, data.items[i]);
+              } else if (!c2 && c3 && !c1) {
+                c2 = false;
+                c1 = true;
+                c3 = false;
+                makeCard(1, data.items[i]);
+              }
+            }
+        }else{
+          getAllPlaylist("PLbP-RAPbcirUUDIQf7ZROYYVyMEDL1CCj")
           .then((data) => {
+            localStorage.clear();
             for (let i = 0; i < data.items.length; i++) {
               if (c1 && !c2 && !c3) {
                 c2 = true;
@@ -552,8 +663,13 @@
                 makeCard(1, data.items[i]);
               }
             }
+            let date = new Date();
+            let dall = date.getDay() +"-"+date.getMonth()+"-"+date.getFullYear(); 
+            localStorage.setItem('video'+dall,JSON.stringify(data))
           })
           .catch((err) => {});
+        }
+       
         function AllVideo() {
           return new Promise((resolve, reject) => {
             $.ajax("https://www.googleapis.com/youtube/v3/activities", {
