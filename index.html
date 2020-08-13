@@ -592,7 +592,8 @@
           $('.c'+nb+'b').on('click',()=>{
             let co = $('.c'+nb+'b').css('background');
             document.documentElement.style.setProperty('--pc', co);
-            $('.modal').fadeOut(300)
+            $('.modal').fadeOut(300);
+		  document.getElementById('lct').pause()
           })
         }
         ChangeCo(1)
