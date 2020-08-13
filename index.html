@@ -150,23 +150,38 @@
         top: 0;
         background: transparent;
       }
-      .title-v {
+      .card-title {
         position: absolute;
         bottom: 0px;
         left: 0;
         width: 100%;
-        height: 52px;
-        background: rgb(235, 235, 235);
+        height: 60px;
+        background: #8b8e92;
       }
       .card {
-        width: 80%;
+        border-radius: 2px;
+        width: 90%;
+        overflow: hidden;
         margin-top: 5px;
-        height: 150px;
+        height: 160px;
         position: relative;
         top: 5px;
         left: 50%;
         background: rgb(241, 241, 241);
         transform: translateX(-50%);
+      }
+      .date-v {
+        display: none;
+      }
+      .title-v {
+        color: white;
+        font-size: 11px;
+        position: absolute;
+        top: 5px;
+        word-break: break-word;
+        left: 5px;
+        width: 90%;
+        background: transparent;
       }
       @media screen and (max-width: 790px) {
         .content {
@@ -177,6 +192,28 @@
         .content {
           width: 96%;
         }
+      }
+      .card-img {
+        height: 100px;
+        width: 100%;
+        background: transparent no-repeat center;
+        background-size: cover;
+      }
+      .blur{
+        position: fixed;
+        top: 0;
+        left:0;
+        z-index: 999;
+        height: 100%;
+        width: 100%;
+        display: none;
+        background: rgba(0, 0, 0, 0.664);
+      }
+      #lct{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
       }
     </style>
   </head>
@@ -237,9 +274,12 @@
       </div>
     </header>
     <div class="content" id="content-video">
-      <div class="line1"></div>
-      <div class="line2"></div>
-      <div class="line3"></div>
+      <div class="line1" id="l1"></div>
+      <div class="line2" id="l2"></div>
+      <div class="line3" id="l3"></div>
+    </div>
+    <div class="blur">
+      <iframe id="lct"width="560" height="315" src="" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <script
       type="text/javascript"
@@ -317,10 +357,10 @@
             case 0:
               return "PLbP-RAPbcirUYwvch_YOUFaTBn60Ywfpz";
               break;
-            case 1:
+            case 2:
               return "PLbP-RAPbcirUCOzJz5JTdpIDDXxhaYruC";
               break;
-            case 2:
+            case 1:
               return "PLbP-RAPbcirUkuwAAuFjMl64X8B5HZVqI";
               break;
             case 3:
@@ -331,7 +371,9 @@
               break;
           }
         }
-
+        var c1 = false,
+          c2 = false,
+          c3 = true;
         for (
           let i = 0;
           i < document.getElementsByClassName("list-i").length;
@@ -340,80 +382,121 @@
           document
             .getElementsByClassName("list-i")
             [i].addEventListener("click", () => {
-              clearBox("content-video");
-              getAllPlaylist(loadPlaylist(i));
-            });
-        }
-
-        var c1 = false,
-          c2 = false,
-          c3 = true;
-        getAllPlaylist("PLCJLiJ8uSJrCpxwz4lmnz1NvvF2SzXbhk")
-          .then((data) => {
-            function makeCard(col = 1, item) {
-              let d = document.createElement("div");
-              d.className = "card";
-              d.innerHTML =
-                `
-          <div class="card-image"><img src="` +
-                item.snippet.thumbnails.default.url +
-                `" class="card-img"></div>
-          <div class="card-title">
-            <b class="title-v"> ` +
-                item.snippet.thumbnails.title +
-                `</b><i class="date-v">` +
-                item.snippet.publishedAt +
-                `</i>
-          </div>
-           `;
-              document.getElementsByClassName("line" + col)[0].appendChild(d);
-            }
-            for (let i = 0; i < data.items.length; i++) {
-              console.log(data.items[i]);
+              clearBox("l1");
+              clearBox("l2");
+              clearBox("l3");
+              getAllPlaylist(loadPlaylist(i)).then(data=>{
+                for (let i = 0; i < data.items.length; i++) {
               if (c1 && !c2 && !c3) {
                 c2 = true;
                 c1 = false;
                 c3 = false;
-                makeCard(2, data.item[i]);
+                makeCard(2, data.items[i]);
               } else if (!c1 && !c3 && c2) {
                 c2 = false;
                 c1 = false;
                 c3 = true;
-                makeCard(3);
+                makeCard(3, data.items[i]);
               } else if (!c2 && c3 && !c1) {
                 c2 = false;
                 c1 = true;
                 c3 = false;
-                makeCard(1);
+                makeCard(1, data.items[i]);
+              }
+            }
+              });
+            });
+        }
+        function OpenLecteur(videoId){
+          $('.blur').fadeIn(400);
+          document.getElementById('lct').src = "https://www.youtube.com/embed/"+videoId;
+        }
+        $('.blur').on('click',()=>{
+          $('.blur').fadeOut(300);
+        });
+          function makeCard(col = 1, item) {
+              let d = document.createElement("div");
+              d.className = "card";
+              d.id = item.snippet.title;
+              d.onclick = (e)=>{
+                OpenLecteur(item.snippet.resourceId.videoId);
+              }
+              try {
+                d.innerHTML =
+                  `
+          <div class="card-image"><div style="background-image:url('` +
+                  item.snippet.thumbnails.standard.url +
+                  `');" class="card-img"></div></div>
+          <div class="card-title">
+            <b class="title-v"> ` +
+                  item.snippet.title +
+                  `</b><i class="date-v">` +
+                  item.snippet.publishedAt +
+                  `</i>
+          </div>
+           `;
+              } catch {
+                d.innerHTML =
+                  `
+          <div class="card-image"><div style="background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHkAAAB5CAMAAAAqJH57AAAAIVBMVEXh6vH////3+frx9fj0+Pve6PHs8vb7/Pzn7vPr8ffk7PR6WZ72AAABC0lEQVRoge3Y6xKCIBBAYWNR1Pd/4BpkVIwu0II5c85v108zyew6IiIiIiIiIiL68/rSfoUHKW34UTa30gzy1WTnTE7Oqck2c8iqybk7KRpC/m4nTwtlG3k0N3dcKNvI/t6V+LQrytMq2WXZ+GZIQ5btJN0ij21k2X2+YXWdm8jirWGhx2WNbnGdewm/CIGeEqtrFXmFV7qbPw6pyBu80T4ndeU9HN3Gj+3k1ZCGHMM72m8m6SEFuT/CK23iA9GWE3C41iZ1IIpyCvb07llNqshJ+EFHD4kt5ThkZORLyJWHkE+XbeYLKb3/z87mpffOoCjkK8mS+eXaks87f99p73qJiIiIiIiIiKh2d2gHDWxLL3aJAAAAAElFTkSuQmCC');" class="card-img"></div></div>
+          <div class="card-title">
+            <b class="title-v"> ` +
+                  item.snippet.title +
+                  `</b><i class="date-v">` +
+                  item.snippet.publishedAt +
+                  `</i>
+          </div>
+           `;
+              }
+               document.getElementsByClassName("line" + col)[0].appendChild(d);
+            }
+        getAllPlaylist("PLbP-RAPbcirUUDIQf7ZROYYVyMEDL1CCj")
+          .then((data) => {
+            
+            for (let i = 0; i < data.items.length; i++) {
+              if (c1 && !c2 && !c3) {
+                c2 = true;
+                c1 = false;
+                c3 = false;
+                makeCard(2, data.items[i]);
+              } else if (!c1 && !c3 && c2) {
+                c2 = false;
+                c1 = false;
+                c3 = true;
+                makeCard(3, data.items[i]);
+              } else if (!c2 && c3 && !c1) {
+                c2 = false;
+                c1 = true;
+                c3 = false;
+                makeCard(1, data.items[i]);
               }
             }
           })
           .catch((err) => {});
-      });
-
-      function AllVideo() {
-        return new Promise((resolve, reject) => {
-          $.ajax("https://www.googleapis.com/youtube/v3/activities", {
-            type: "GET",
-            data: {
-              channelId: "UCSG_LMWaqEikCc_BWeu2jlw",
-              key: "AIzaSyA1Jk6t2-uESF4Jn4Wz7EjFafoFL9APsXM",
-              part: "snippet, contentDetails",
-            },
-            success: function (data, status, xhr) {
-              resolve(data);
-            },
-            error: function (jqXhr, textStatus, errorMessage) {
-              reject(errorMessage);
-            },
+        function AllVideo() {
+          return new Promise((resolve, reject) => {
+            $.ajax("https://www.googleapis.com/youtube/v3/activities", {
+              type: "GET",
+              data: {
+                channelId: "UCSG_LMWaqEikCc_BWeu2jlw",
+                key: "AIzaSyA1Jk6t2-uESF4Jn4Wz7EjFafoFL9APsXM",
+                part: "snippet, contentDetails",
+              },
+              success: function (data, status, xhr) {
+                resolve(data);
+              },
+              error: function (jqXhr, textStatus, errorMessage) {
+                reject(errorMessage);
+              },
+            });
           });
-        });
-      }
-      AllVideo()
-        .then((data) => {
-          console.log(data);
-        })
-        .catch((err) => {});
+        }
+      //   AllVideo()
+      //     .then((data) => {
+           
+      //     })
+      //     .catch((err) => {});
+      });
     </script>
   </body>
 </html>
