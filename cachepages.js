@@ -2,7 +2,6 @@ const cacheName = 'v1';
 
 const cacheAssets = [
   'index.html',
-  'cachesite.js',
   'googleb06a000c8c2fc325.html'
 ];
 
