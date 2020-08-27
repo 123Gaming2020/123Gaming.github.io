@@ -475,6 +475,10 @@
       .register('./cachepages.js')
       .then(reg => console.log('Service Worker: Registered (Pages)'))
       .catch(err => console.log(`Service Worker: Error: ${err}`));
+	  navigator.serviceWorker
+      .register('./cachesite.js')
+      .then(reg => console.log('Service Worker: Registered (Site)'))
+      .catch(err => console.log(`Service Worker: Error: ${err}`));
   });
 }
       document.addEventListener("DOMContentLoaded", () => {
