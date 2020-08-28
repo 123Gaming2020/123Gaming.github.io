@@ -3,7 +3,6 @@ const cacheName = 'v1';
 const filesToCache = [
    './index.html',
    './googleb06a000c8c2fc325.html',
-   './favicon.ico'
 ];
 self.addEventListener('activate', event => {
   console.log('worker : activate');
