@@ -1,39 +1,36 @@
 const cacheName = 'v1';
 
-const cacheAssets = [
-  'index.html',
-  'googleb06a000c8c2fc325.html'
+const filesToCache = [
+   './index.html',
+   './googleb06a000c8c2fc325.html',
+   './favicon.ico'
 ];
+self.addEventListener('activate', event => {
+  console.log('worker : activate');
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.map(key => {
+        if (!expectedCaches.includes(key)) {
+          return caches.delete(key);
+        }
+      })
+    )).then(() => {
+      console.log('new worker activated');
+    })
+  );
+});
 
 self.addEventListener('install', e => {
+  console.log('worker : install');
   e.waitUntil(
-    caches
-      .open(cacheName)
-      .then(cache => {
-        cache.addAll(cacheAssets);
-      })
-      .then(() => self.skipWaiting())
+    caches.open(cacheName)
+    .then(cache => cache.addAll(filesToCache))
   );
 });
-
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cache => {
-          if (cache !== cacheName) {
-            return caches.delete(cache);
-          }
-        })
-      );
-    })
-  );
-});
-
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    fetch(event.request).catch(function() {
-      return caches.match(event.request);
-    })
-  );
+self.addEventListener('fetch', e => {
+  console.log('worker : fetch', e.request);
+  e.respondWith(
+    caches.match(e.request)
+    .then(response => response ? response : fetch(e.request))
+  )
 });
